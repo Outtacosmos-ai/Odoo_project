@@ -29,6 +29,7 @@ services:
       - ./mnt/extra-addons:/mnt/extra-addons
       - ./etc:/etc/odoo
       - ./etc/odoo.conf:/etc/odoo/odoo.conf
+      - ./etc/odoo-server.log:/var/log/odoo/odoo-server.log
     restart: always
   pgadmin:
     image: dpage/pgadmin4
