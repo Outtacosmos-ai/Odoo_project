@@ -9,10 +9,6 @@ class StockPicking(models.Model):
 
     @api.multi
     def button_set_to_draft(self):
-        """
-        Button to cycle through states:
-        draft -> waiting -> ready -> done -> draft
-        """
         states_cycle = ['draft', 'waiting', 'ready', 'done']
         
         for record in self:
@@ -22,8 +18,7 @@ class StockPicking(models.Model):
                 next_state = states_cycle[next_index]
             except ValueError:
                 next_state = 'draft'
-            
-            # Update move lines state
+
             move_state_map = {
                 'draft': 'draft',
                 'waiting': 'confirmed',
@@ -34,12 +29,10 @@ class StockPicking(models.Model):
             if next_state in move_state_map:
                 record.move_lines.write({'state': move_state_map[next_state]})
             
-            # Update picking state
             record.write({'state': next_state})
             _logger.info('Stock picking %s state changed from %s to %s', 
                         record.name, record.state, next_state)
             
-            # Additional state-specific actions
             if next_state == 'done':
                 for move in record.move_lines:
                     move.quantity_done = move.product_uom_qty

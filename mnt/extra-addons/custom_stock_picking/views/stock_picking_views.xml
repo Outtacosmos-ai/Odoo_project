@@ -11,7 +11,7 @@
                             type="object"
                             string="Set to Draft"
                             attrs="{'invisible': [('state', '=', False)]}"
-                            groups="group_stock_picking_state_control"/>
+                            groups="custom_stock_picking.group_stock_picking_state_control"/>
                 </xpath>
             </field>
         </record>
